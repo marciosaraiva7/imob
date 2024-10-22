@@ -3,7 +3,7 @@ import { HeaderPublic } from "../components/headerPublic";
 
 export default function Layout() {
   return (
-    <Stack initialRouteName="Home">
+    <Stack initialRouteName="index">
       <Stack.Screen name="index" options={{ headerShown: false }} />
 
       <Stack.Screen
