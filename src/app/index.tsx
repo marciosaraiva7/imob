@@ -32,7 +32,7 @@ export default function Login() {
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
         <Logo />
-        <Text style={styles.logoText}>IMOB</Text>
+        <Text style={styles.logoText}>BWay</Text>
 
         {/* Campo de Usuário com ícone */}
         <View style={styles.inputContainer}>
