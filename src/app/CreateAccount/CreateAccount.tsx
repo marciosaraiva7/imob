@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { styles } from "./CreateAccountStyles";
+import styles from "./CreateAccountStyles";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
 

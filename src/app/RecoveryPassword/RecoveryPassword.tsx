@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { styles } from "./RecoveryPasswordStyles";
+import styles from "./RecoveryPasswordStyles";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function RecoveryPassword() {

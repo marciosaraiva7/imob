@@ -1,7 +1,9 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+import { FONT } from "../constants/fonts";
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
+    flex: 1,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -9,7 +11,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   innerContainer: {
-    flex: 1,
     display: "flex",
     width: "100%",
     alignItems: "center",
@@ -40,7 +41,7 @@ export const styles = StyleSheet.create({
     fontSize: 19.2, // Tamanho do texto
   },
   button: {
-    width: "100%",
+    width: Dimensions.get("window").width - 80,
     height: 40,
     marginBottom: 32, // mb-8
     backgroundColor: "#00C851", // bg-green-button
@@ -49,8 +50,8 @@ export const styles = StyleSheet.create({
     borderRadius: 9999, // rounded-full
   },
   buttonText: {
+    fontFamily: FONT.ROBOTO_BOLD,
     color: "white",
-    fontWeight: "bold",
     fontSize: 19.2,
   },
   recoveryPassword: {
@@ -61,10 +62,11 @@ export const styles = StyleSheet.create({
     marginBottom: 32,
   },
   createAccount: {
-    width: "100%",
+    width: Dimensions.get("window").width - 80,
     height: 40,
     marginBottom: 32,
     backgroundColor: "transparent",
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 9999,
@@ -77,3 +79,5 @@ export const styles = StyleSheet.create({
     fontSize: 19.2,
   },
 });
+
+export default styles;

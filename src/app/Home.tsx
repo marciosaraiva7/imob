@@ -1,33 +1,78 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { Image } from "expo-image";
+import React, { useState, useCallback } from "react";
+import { useRouter } from "expo-router";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  Button,
+  ImageBackground,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useCameraPermissions } from "expo-camera";
+
+import QRCodeScanner from "../components/qrcodescanner";
+import { plantoes } from "../constants/plantoes";
+import styles from "./LoginStyles";
+
+interface PlantaoI {
+  code: string;
+  id: number;
+}
 
 export default function Home() {
+  const router = useRouter();
+  const [facingCamera, setFacingCamera] = useState("back");
+  const [permission, requestPermission] = useCameraPermissions();
+  const [qrData, setQrData] = useState<string | null>(null);
+
+  const handleQRCodeScanned = useCallback((data: string) => {
+    setQrData(data);
+    alert(`QR Code lido: ${data}`);
+  }, []);
+
+  // Função para navegar para InsertCode, incluindo dados do QR
+  const insertCode = useCallback(
+    ({ code, id }: PlantaoI) => {
+      router.push({
+        pathname: "/InsertCode/InsertCode",
+        params: {
+          type: "Corretor",
+          name: "Marcio Saraiva",
+          codeValid: code,
+          id: id,
+        },
+      });
+    },
+    [qrData, router]
+  );
+
+  if (!permission) {
+    return <View style={styles.container} />;
+  }
+
+  if (!permission.granted) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: "center", marginBottom: 10 }}>
+          Você precisa permitir acesso à câmera
+        </Text>
+        <Button onPress={requestPermission} title="Permitir Acesso" />
+      </View>
+    );
+  }
+
   const type = "Corretor";
   const name = "Marcio Saraiva";
-  const plantoes = [
-    {
-      name: "Ed. Roberto Teixeira",
-      address: "Rua Ibiapina, 236 - RJ",
-      bar: 9,
-      posbar: 9.45,
-    },
-    {
-      name: "Ed. Roberto Teixeira",
-      address: "Rua Ibiapina, 236 - RJ",
-      bar: 9,
-      posbar: 9.45,
-    },
-  ];
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <StatusBar style="dark" />
       <View
         style={{
-          display: "flex",
           flexDirection: "row",
           paddingHorizontal: 35,
           paddingTop: 30,
@@ -36,17 +81,11 @@ export default function Home() {
           alignItems: "center",
         }}
       >
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 25,
-          }}
-        >
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 25 }}>
           <Image
-            source={
-              "https://classic.exame.com/wp-content/uploads/2020/09/Ricardo-Martins_imoveis.jpg?quality=70&strip=info&w=1024"
-            }
+            source={{
+              uri: "https://classic.exame.com/wp-content/uploads/2020/09/Ricardo-Martins_imoveis.jpg?quality=70&strip=info&w=1024",
+            }}
             style={{
               width: 50,
               height: 50,
@@ -54,46 +93,18 @@ export default function Home() {
             }}
           />
           <View>
-            <Text
-              style={{
-                fontSize: 26,
-                lineHeight: 34,
-                fontWeight: "bold",
-              }}
-            >
-              Ola, {type}
+            <Text style={{ fontSize: 26, lineHeight: 34, fontWeight: "bold" }}>
+              Olá, {type}
             </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                lineHeight: 24,
-                fontWeight: "normal",
-              }}
-            >
-              {name}
-            </Text>
+            <Text style={{ fontSize: 18, lineHeight: 24 }}>{name}</Text>
           </View>
         </View>
         <Icon name="circle-notifications" size={33} color={"orange"} />
       </View>
-      <View
-        style={{
-          paddingLeft: 35,
-          paddingTop: 40,
-        }}
-      >
-        <View
-          style={{
-            marginBottom: 11,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 14,
-              lineHeight: 19,
-              color: "#1A1A1A",
-            }}
-          >
+
+      <View style={{ paddingLeft: 35, paddingTop: 40, flex: 1 }}>
+        <View style={{ marginBottom: 11 }}>
+          <Text style={{ fontSize: 14, lineHeight: 19, color: "#1A1A1A" }}>
             Selecione um plantão
           </Text>
         </View>
@@ -101,23 +112,21 @@ export default function Home() {
           data={plantoes}
           horizontal
           showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View
-              style={{
-                gap: 29,
-              }}
-            >
-              <View
+            <View style={{ marginRight: 20 }}>
+              <ImageBackground
+                source={{ uri: item.img }}
+                resizeMode="cover"
                 style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
                   width: 320,
                   height: 440,
-                  backgroundColor: "gray",
                   borderRadius: 30,
-                  marginRight: 20,
+                  overflow: "hidden",
+                  justifyContent: "flex-end",
                   paddingHorizontal: 17,
                   paddingVertical: 10,
+                  marginBottom: 20,
                 }}
               >
                 <Text
@@ -126,7 +135,6 @@ export default function Home() {
                     lineHeight: 37,
                     fontWeight: "bold",
                     color: "white",
-                    letterSpacing: 0,
                   }}
                 >
                   {item.name}
@@ -134,9 +142,7 @@ export default function Home() {
                 <Text
                   style={{
                     fontSize: 22,
-                    fontWeight: "regular",
                     lineHeight: 29,
-                    letterSpacing: 0,
                     color: "white",
                   }}
                 >
@@ -144,9 +150,7 @@ export default function Home() {
                 </Text>
                 <View
                   style={{
-                    display: "flex",
                     flexDirection: "row",
-                    width: "100%",
                     justifyContent: "space-between",
                     marginVertical: 20,
                   }}
@@ -170,29 +174,14 @@ export default function Home() {
                     Pós-Barra: {item.posbar}
                   </Text>
                 </View>
-                <TouchableOpacity
-                  style={{
-                    width: "100%",
-                    height: 45,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#80BC38",
-                    borderRadius: 23,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "white",
-                    }}
-                  >
-                    Ler QR Code
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                <QRCodeScanner
+                  onQRCodeScanned={handleQRCodeScanned}
+                  codeValid={item.codeValid}
+                />
+              </ImageBackground>
+
               <TouchableOpacity
                 style={{
-                  display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   width: 300,
@@ -202,12 +191,21 @@ export default function Home() {
                   borderColor: "#80BC38",
                   marginHorizontal: 17,
                 }}
+                onPress={() =>
+                  insertCode({ code: item.codeValid, id: item.id })
+                }
               >
                 <Text>Inserir código</Text>
               </TouchableOpacity>
             </View>
           )}
         />
+
+        {qrData && (
+          <Text style={{ marginTop: 20, fontSize: 16, color: "#333" }}>
+            Dado do QR Code: {qrData}
+          </Text>
+        )}
       </View>
     </SafeAreaView>
   );

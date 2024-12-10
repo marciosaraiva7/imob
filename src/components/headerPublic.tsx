@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { View, Text, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 export const HeaderPublic = ({
