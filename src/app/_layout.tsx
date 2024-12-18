@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useEffect } from "react";
 import { HeaderPublic } from "../components/headerPublic";
 
 SplashScreen.preventAutoHideAsync();
@@ -90,6 +90,21 @@ export default function Layout() {
       <Stack.Screen
         name="OnDutyDetail/OnDutyDetail"
         options={{
+          headerTransparent: true,
+          headerBlurEffect: "extraLight",
+          headerBackVisible: false,
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: "white",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Notifications/Notifications"
+        options={{
+          headerTitle: (props) => (
+            <HeaderPublic pageName={"Notificacoes"} descriptionPage="" />
+          ),
           headerTransparent: true,
           headerBlurEffect: "extraLight",
           headerBackVisible: false,

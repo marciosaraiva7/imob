@@ -1,24 +1,29 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState, useCallback } from "react";
+import { useCameraPermissions } from "expo-camera";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React, { useCallback, useState } from "react";
 import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Image,
   Button,
+  FlatList,
+  Image,
   ImageBackground,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { useCameraPermissions } from "expo-camera";
 
 import QRCodeScanner from "../components/qrcodescanner";
 import { plantoes } from "../constants/plantoes";
 import styles from "./LoginStyles";
 
 interface PlantaoI {
+  code: string;
+  id: number;
+}
+interface ScannerQRProps {
+  data: any;
   code: string;
   id: number;
 }
@@ -29,10 +34,23 @@ export default function Home() {
   const [permission, requestPermission] = useCameraPermissions();
   const [qrData, setQrData] = useState<string | null>(null);
 
-  const handleQRCodeScanned = useCallback((data: string) => {
-    setQrData(data);
-    alert(`QR Code lido: ${data}`);
-  }, []);
+  const handleQRCodeScanned = useCallback(
+    ({ data, code, id }: ScannerQRProps) => {
+      setQrData(data);
+      console.log("code", code);
+      console.log("data", data);
+      if (code == data) {
+        router.push({
+          pathname: "/OnDutyDetail/OnDutyDetail",
+          params: {
+            id: id,
+            codeValid: code,
+          },
+        });
+      }
+    },
+    []
+  );
 
   // Função para navegar para InsertCode, incluindo dados do QR
   const insertCode = useCallback(
@@ -99,7 +117,11 @@ export default function Home() {
             <Text style={{ fontSize: 18, lineHeight: 24 }}>{name}</Text>
           </View>
         </View>
-        <Icon name="circle-notifications" size={33} color={"orange"} />
+        <TouchableOpacity
+          onPress={() => router.push("/Notifications/Notifications")}
+        >
+          <Icon name="circle-notifications" size={33} color={"orange"} />
+        </TouchableOpacity>
       </View>
 
       <View style={{ paddingLeft: 35, paddingTop: 40, flex: 1 }}>
@@ -175,7 +197,10 @@ export default function Home() {
                   </Text>
                 </View>
                 <QRCodeScanner
-                  onQRCodeScanned={handleQRCodeScanned}
+                  onQRCodeScanned={() =>
+                    handleQRCodeScanned({ code: item.codeValid, id: item.id })
+                  }
+                  id={item.id}
                   codeValid={item.codeValid}
                 />
               </ImageBackground>

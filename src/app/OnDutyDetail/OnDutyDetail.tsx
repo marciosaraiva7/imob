@@ -1,25 +1,22 @@
+import { PlantaoI } from "@/src/constants/interfaces";
+import { plantoes } from "@/src/constants/plantoes";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { BlurView } from "expo-blur";
-import { ScrollView, StyleSheet } from "react-native";
 import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
   ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { plantoes } from "@/src/constants/plantoes";
-import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "./OnDutyStyle";
-import { PlantaoI } from "@/src/constants/interfaces";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Circle } from "react-native-svg";
-import { LinearGradient } from "expo-linear-gradient";
 
 export default function OnDutyDetail() {
   const router = useRouter();
@@ -86,8 +83,8 @@ export default function OnDutyDetail() {
           <LinearGradient
             colors={["rgba(255,255,255,1)", "rgba(255,255,255,0)"]}
             style={StyleSheet.absoluteFillObject}
-            start={{ x: 0.5, y: 0.18 }}
-            end={{ x: 0.5, y: 0.6 }}
+            start={{ x: 0.5, y: 0.14 }}
+            end={{ x: 0.5, y: 0.5 }}
           />
           <LinearGradient
             colors={["rgba(255,255,255,1)", "rgba(255,255,255,0)"]}

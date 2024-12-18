@@ -1,16 +1,13 @@
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
-import { useRouter } from "expo-router";
 
 import {
-  View,
+  Keyboard,
   Text,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Keyboard,
-  Platform,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,6 +19,7 @@ export default function InsertCode() {
   const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
 
   const navToDetail = () => {
     router.push({
@@ -49,25 +47,40 @@ export default function InsertCode() {
     }
   }, [code]);
 
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", (e) => {
+      setKeyboardOffset(e.endCoordinates.height); // Captura a altura do teclado
+    });
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardOffset(0); // Restaura quando o teclado é fechado
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+        <StatusBar style="dark" />
+
+        <View
           style={{
-            display: "flex",
+            flex: 1,
+            justifyContent: "center",
             alignItems: "center",
-            width: "100%",
           }}
         >
-          <StatusBar style="dark" />
           <View style={styles.inputContainer}>
             <OtpInput
               numberOfDigits={6}
               onTextChange={(text) => setCode(text)}
               theme={{
+                containerStyle: {
+                  marginBottom: 10,
+                },
                 pinCodeTextStyle: {
                   color: success ? "#80BC38" : error ? "#f12c2c" : "black",
                   fontWeight: "bold",
@@ -81,7 +94,24 @@ export default function InsertCode() {
                 },
               }}
             />
+            {error && (
+              <Text style={{ color: "#ff4d4d" }}>
+                Código inválido, tente novamente!
+              </Text>
+            )}
           </View>
+        </View>
+
+        <View
+          style={{
+            position: "absolute",
+            bottom: keyboardOffset || 40, // Acompanha o teclado ou fica na posição padrão
+            left: 0,
+            right: 0,
+            alignItems: "center",
+            paddingBottom: keyboardOffset ? 10 : 0, // Margem de conforto
+          }}
+        >
           <TouchableOpacity
             style={[
               styles.button,
@@ -95,14 +125,8 @@ export default function InsertCode() {
               {success ? "Acessar" : "Aguardando..."}
             </Text>
           </TouchableOpacity>
-
-          {error && (
-            <Text style={{ color: "#ff4d4d", marginTop: 10 }}>
-              Código inválido, tente novamente!
-            </Text>
-          )}
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }

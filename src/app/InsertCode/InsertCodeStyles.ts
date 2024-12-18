@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff", // Exemplo de fundo
   },
   inputContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     paddingHorizontal: 10,
     marginVertical: 5,

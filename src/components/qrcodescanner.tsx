@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Alert,
-} from "react-native";
+import { Camera, CameraView } from "expo-camera";
 import { useRouter } from "expo-router";
-import { Camera, CameraType, CameraView } from "expo-camera";
+import React, { useEffect, useState } from "react";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface QRCodeScannerProps {
   onQRCodeScanned: (data: string) => void; // Callback para retornar o QR code
   codeValid: string;
+  id: number;
 }
 
 const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
   onQRCodeScanned,
   codeValid,
+  id,
 }) => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -32,7 +27,6 @@ const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
     })();
   }, []);
 
-  // Handler para QR code escaneado
   const handleBarCodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
     setIsModalVisible(false); // Fecha o modal após o scan
@@ -45,6 +39,7 @@ const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
       params: {
         type: "Corretor",
         name: "Marcio Saraiva",
+        id: id,
         codeValid: codeValid,
       },
     });
