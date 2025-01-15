@@ -6,7 +6,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
-
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    width: "100%",
+  },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -49,7 +56,6 @@ const styles = StyleSheet.create({
   backButton: {
     justifyContent: "center",
     alignItems: "flex-start",
-    width: "100%",
     paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 30,

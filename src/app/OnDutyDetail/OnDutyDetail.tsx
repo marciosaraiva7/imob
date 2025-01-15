@@ -64,9 +64,17 @@ export default function OnDutyDetail() {
       style={styles.container}
     >
       <StatusBar style="dark" />
-      <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <Ionicons name="arrow-back-sharp" size={26} color="black" />
-      </TouchableOpacity>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity style={styles.backButton} onPress={router.back}>
+          <Ionicons name="arrow-back-sharp" size={26} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.navigate("/Home")}
+        >
+          <Ionicons name="home-outline" size={26} color="black" />
+        </TouchableOpacity>
+      </View>
       <ScrollView style={{ flex: 1 }}>
         <ImageBackground
           source={{ uri: plantao.img }}
