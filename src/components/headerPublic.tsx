@@ -1,6 +1,6 @@
-import React, { View, Text, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import React, { SafeAreaView, Text, TouchableOpacity } from "react-native";
 export const HeaderPublic = ({
   pageName,
   descriptionPage,
@@ -10,7 +10,9 @@ export const HeaderPublic = ({
 }) => {
   const router = useRouter();
   return (
-    <View
+    <SafeAreaView
+      // tint="light"
+      // intensity={100}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -43,6 +45,6 @@ export const HeaderPublic = ({
       >
         {descriptionPage}
       </Text>
-    </View>
+    </SafeAreaView>
   );
 };

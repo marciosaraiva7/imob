@@ -64,7 +64,10 @@ export default function OnDutyDetail() {
       style={styles.container}
     >
       <StatusBar style="dark" />
-      <TouchableOpacity style={styles.backButton} onPress={router.back}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.push("/Home")}
+      >
         <Ionicons name="arrow-back-sharp" size={26} color="black" />
       </TouchableOpacity>
       <ScrollView style={{ flex: 1 }}>

@@ -30,7 +30,7 @@ const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
   const handleBarCodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
     setIsModalVisible(false); // Fecha o modal após o scan
-    onQRCodeScanned(data); // Envia o dado escaneado para o callback
+    onQRCodeScanned(data); // Envi
   };
 
   const insertCode = () => {
@@ -73,14 +73,23 @@ const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
             onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
           />
           <TouchableOpacity
-            style={styles.closeButton}
+            style={styles.insertCodeButton}
             onPress={() => {
               setScanned(false);
               setIsModalVisible(false); // Fecha o modal
               insertCode();
             }}
           >
-            <Text style={styles.closeButtonText}>Inserir código</Text>
+            <Text style={styles.insertButtonText}>Inserir código</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => {
+              setScanned(false);
+              setIsModalVisible(false);
+            }}
+          >
+            <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -97,6 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#80BC38",
     borderRadius: 23,
+    zIndex: 10,
   },
   buttonText: {
     color: "white",
@@ -108,9 +118,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  closeButton: {
+  insertCodeButton: {
     position: "absolute",
-    bottom: 40,
+    bottom: 95,
     alignSelf: "center",
     backgroundColor: "transparent",
     padding: 12,
@@ -124,8 +134,30 @@ const styles = StyleSheet.create({
     borderColor: "#80BC38",
     marginHorizontal: 17,
   },
-  closeButtonText: {
+  insertButtonText: {
     color: "#80BC38",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  closeButton: {
+    position: "absolute",
+    bottom: 40,
+    alignSelf: "center",
+    backgroundColor: "transparent",
+    padding: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 40,
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 9999,
+    borderColor: "#bc3838",
+    marginHorizontal: 17,
+  },
+
+  closeButtonText: {
+    color: "#bc3838",
     fontSize: 16,
     fontWeight: "bold",
   },

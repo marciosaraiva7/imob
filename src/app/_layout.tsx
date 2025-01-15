@@ -100,6 +100,18 @@ export default function Layout() {
         }}
       />
       <Stack.Screen
+        name="Profile/Profile"
+        options={{
+          headerTransparent: true,
+          headerBlurEffect: "extraLight",
+          headerBackVisible: false,
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: "white",
+          },
+        }}
+      />
+      <Stack.Screen
         name="Notifications/Notifications"
         options={{
           headerTitle: (props) => (
