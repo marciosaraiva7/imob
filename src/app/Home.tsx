@@ -75,7 +75,9 @@ export default function Home() {
   if (!permission.granted) {
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: "center", marginBottom: 10 }}>
+        <Text
+          style={{ textAlign: "center", marginBottom: 10, color: "#FFFFFF" }}
+        >
           Você precisa permitir acesso à câmera
         </Text>
         <Button onPress={requestPermission} title="Permitir Acesso" />
@@ -197,8 +199,12 @@ export default function Home() {
                   </Text>
                 </View>
                 <QRCodeScanner
-                  onQRCodeScanned={() =>
-                    handleQRCodeScanned({ code: item.codeValid, id: item.id })
+                  onQRCodeScanned={(data) =>
+                    handleQRCodeScanned({
+                      code: item.codeValid,
+                      id: item.id,
+                      data,
+                    })
                   }
                   id={item.id}
                   codeValid={item.codeValid}
