@@ -1,25 +1,26 @@
+import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
-  View,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   Text,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "./CreateAccountStyles";
-import { StatusBar } from "expo-status-bar";
-import Toast from "react-native-toast-message";
 
 export default function CreateAccount() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   function handleCreateAccount() {
     const payload = {
       name,
@@ -32,6 +33,11 @@ export default function CreateAccount() {
         type: "success",
         text1: "conta criada com sucesso",
       });
+    } else if (payload.email === "") {
+      Toast.show({
+        type: "error",
+        text1: "Digite uma senha valida",
+      });
     } else {
       Toast.show({
         type: "error",
@@ -39,6 +45,7 @@ export default function CreateAccount() {
       });
     }
   }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -97,7 +104,11 @@ export default function CreateAccount() {
             />
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+          <TouchableOpacity
+            style={styles.button}
+            disabled={confirmPassword ? false : true}
+            onPress={handleCreateAccount}
+          >
             <Text style={styles.buttonText}>Finalizar</Text>
           </TouchableOpacity>
           <Toast />

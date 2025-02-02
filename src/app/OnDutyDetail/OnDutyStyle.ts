@@ -1,3 +1,4 @@
+import { COLORS } from "@/src/constants/colors";
 import { FONT } from "@/src/constants/fonts";
 import { StyleSheet } from "react-native";
 
@@ -6,6 +7,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
+  imageBackground: {
+    flex: 1,
+    height: 735,
+    alignItems: "flex-start",
+    backgroundColor: COLORS.white.primary,
+    overflow: "hidden",
+    paddingHorizontal: 30,
+  },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -13,6 +22,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     width: "100%",
+    zIndex: 2,
   },
   inputContainer: {
     flexDirection: "row",
@@ -23,7 +33,7 @@ const styles = StyleSheet.create({
     width: "85%",
   },
   icon: {
-    color: "#000",
+    color: COLORS.white.primary,
     marginRight: 10,
   },
   input: {
@@ -41,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: COLORS.white.primary,
     fontWeight: "bold",
     fontSize: 18,
     lineHeight: 24,
@@ -59,6 +69,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 30,
+    zIndex: 3,
   },
   nameBuilding: {
     fontFamily: FONT.ROBOTO_BOLD,
@@ -97,7 +108,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 22,
+    paddingHorizontal: 50,
     paddingVertical: 38,
   },
   textBlurContainer: {
@@ -106,6 +117,21 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     letterSpacing: 0,
     textAlign: "center",
+    marginBottom: 25,
+  },
+  textSimple: {
+    fontWeight: 300,
+    fontSize: 14,
+    lineHeight: 19,
+    fontFamily: FONT.ROBOTO_REGULAR,
+    marginBottom: 10,
+  },
+  counter: {
+    fontFamily: FONT.ROBOTO_REGULAR,
+    fontSize: 46,
+    lineHeight: 60,
+    letterSpacing: 0,
+    color: COLORS.green.primary,
   },
   viewTimer: {
     display: "flex",
@@ -114,6 +140,42 @@ const styles = StyleSheet.create({
     paddingTop: 130,
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  viewBar: {
+    width: "100%",
+    marginBottom: 38,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  textBar: {
+    fontFamily: FONT.ROBOTO_BOLD,
+    fontWeight: "bold",
+  },
+  viewButtonExit: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 40,
+  },
+  buttonExit: {
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: COLORS.red.primary,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 999,
+    width: "80%",
+    alignItems: "center",
+    color: COLORS.red.primary,
+  },
+  textButtonExit: {
+    color: COLORS.red.primary,
+    fontWeight: "regular",
+    fontSize: 18,
+    lineHeight: 24,
   },
 });
 

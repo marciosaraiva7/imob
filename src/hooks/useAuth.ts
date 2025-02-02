@@ -6,7 +6,7 @@ interface User {
   id: number;
   email: string;
   name: string;
-  [key: string]: any; // Para incluir outros campos do payload
+  [key: string]: any;
 }
 
 interface AuthContext {
@@ -23,7 +23,6 @@ export const useAuth = (): AuthContext => {
   const [token, setToken] = useState<string | null>(null);
   const [isTokenValid, setIsTokenValid] = useState(false);
 
-  // Função para carregar informações do usuário ao iniciar o aplicativo
   useEffect(() => {
     const loadAuthData = async () => {
       try {
@@ -39,7 +38,6 @@ export const useAuth = (): AuthContext => {
     loadAuthData();
   }, []);
 
-  // Valida e decodifica o token
   const validateAndSetToken = useCallback((jwt: string) => {
     try {
       const decoded: JwtPayload & User = jwtDecode(jwt);
@@ -58,7 +56,6 @@ export const useAuth = (): AuthContext => {
     }
   }, []);
 
-  // Login: salva o token e informações do usuário no AsyncStorage
   const login = async (jwt: string) => {
     try {
       validateAndSetToken(jwt);
@@ -68,7 +65,6 @@ export const useAuth = (): AuthContext => {
     }
   };
 
-  // Logout: remove as informações do usuário
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("authToken");

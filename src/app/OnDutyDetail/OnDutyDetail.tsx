@@ -1,6 +1,6 @@
+import Header from "@/src/components/HeaderComponent";
 import { PlantaoI } from "@/src/constants/interfaces";
 import { plantoes } from "@/src/constants/plantoes";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -26,6 +26,9 @@ export default function OnDutyDetail() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [filteredPlantao, setFilteredPlantao] = useState<any>(null);
+
+  const bar = "09:00";
+  const posBar = "09:45";
 
   const plantao = plantoes.find((plantao) => plantao.id == id);
   if (!plantao) {
@@ -64,29 +67,12 @@ export default function OnDutyDetail() {
       style={styles.container}
     >
       <StatusBar style="dark" />
-      <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={router.back}>
-          <Ionicons name="arrow-back-sharp" size={26} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.navigate("/Home")}
-        >
-          <Ionicons name="home-outline" size={26} color="black" />
-        </TouchableOpacity>
-      </View>
-      <ScrollView style={{ flex: 1 }}>
+      <Header onBack={router.back} onHome={() => router.navigate("/Home")} />
+      <ScrollView style={{ flex: 1, paddingTop: 130 }}>
         <ImageBackground
           source={{ uri: plantao.img }}
           resizeMode="cover"
-          style={{
-            flex: 1,
-            height: 735,
-            alignItems: "flex-start",
-            backgroundColor: "#ffffff",
-            overflow: "hidden",
-            paddingHorizontal: 30,
-          }}
+          style={styles.imageBackground}
         >
           <LinearGradient
             colors={["rgba(255,255,255,1)", "rgba(255,255,255,0)"]}
@@ -98,7 +84,7 @@ export default function OnDutyDetail() {
             colors={["rgba(255,255,255,1)", "rgba(255,255,255,0)"]}
             style={StyleSheet.absoluteFillObject}
             start={{ x: 0.5, y: 1 }}
-            end={{ x: 0.5, y: 0.9 }}
+            end={{ x: 0.5, y: 0.77 }}
           />
 
           <View style={styles.checkinContainer}>
@@ -109,19 +95,34 @@ export default function OnDutyDetail() {
             </Text>
           </View>
           <View style={styles.viewTimer}>
-            <BlurView tint="light" intensity={100} style={styles.blurContainer}>
+            <BlurView
+              tint="extraLight"
+              intensity={88}
+              style={styles.blurContainer}
+            >
               <Text style={styles.textBlurContainer}>
                 Aguarde o horário para o sorteio
               </Text>
+              <Text style={styles.textSimple}>Faltam</Text>
+              <Text style={styles.counter}>12:53</Text>
             </BlurView>
           </View>
+          <View>
+            <Text>Detalhes do plantão</Text>
+            <View style={styles.viewBar}>
+              <Text style={styles.textBar}>Barra: {bar}</Text>
+              <Text style={styles.textBar}>Pós-Barra: {posBar}</Text>
+            </View>
+          </View>
         </ImageBackground>
-        <View
-          style={{
-            height: 100,
-          }}
-        >
+        <View>
           <Text>Total de unidades: 345</Text>
+          <Text>Atendimento: segunda, terca e sexta</Text>
+        </View>
+        <View style={styles.viewButtonExit}>
+          <TouchableOpacity style={styles.buttonExit}>
+            <Text style={styles.textButtonExit}>Sair do Plantao</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

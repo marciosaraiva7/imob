@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
@@ -15,7 +16,7 @@ export default function Profile() {
   const user = {
     name: "Marcio Saraiva",
     email: "marcio.saraiva@example.com",
-    photo: "https://via.placeholder.com/150",
+    photo: "https://picsum.photos/200",
   };
 
   const options = [
@@ -26,6 +27,7 @@ export default function Profile() {
 
   const handleLogout = () => {
     alert("Você saiu da sua conta.");
+    router.push("/");
   };
 
   return (
